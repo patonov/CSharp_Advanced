@@ -1,0 +1,69 @@
+using System;  
+using System.Collections.Generic;  
+using System.Linq;  
+using System.Text;  
+using System.Threading.Tasks;
+					
+public class Program
+{
+	public static void Main()
+	{
+	
+		List<int> guestsEatTooMuch = Console.ReadLine().Split().Select(int.Parse).ToList();
+		List<int> platesForGuests = Console.ReadLine().Split().Select(int.Parse).ToList();
+		
+		Stack<int> plateStack = new Stack<int>(platesForGuests);
+		Queue<int> guestQueue = new Queue<int>(guestsEatTooMuch);
+		int waste = 0;
+		
+		while (plateStack.Any() && guestQueue.Any())
+		{					
+			var currentGuest = guestQueue.Peek();
+			var currentPlate = plateStack.Peek();
+			
+			if (currentGuest > currentPlate)
+			{
+				while (true)
+				{	
+				
+					if (currentGuest <= 0)
+					{
+					guestQueue.Dequeue();
+					var diff = currentPlate - currentGuest;
+					waste += diff;
+					break;
+					}
+				currentGuest -= currentPlate;
+				plateStack.Pop();
+				
+				}
+			}
+			
+			if (currentGuest <= currentPlate)
+			{
+			var diff = currentPlate - currentGuest;
+			waste += diff;
+			plateStack.Pop();
+			guestQueue.Dequeue();
+			}		
+						
+		}
+		
+		if (guestQueue.Count == 0)
+		{
+		Console.WriteLine("Plates: {0}", String.Join(" ", plateStack));
+		Console.WriteLine("Wasted grams of food: {0}", waste);
+		}
+		else
+		{
+		Console.WriteLine("Guests: {0}", String.Join(" ", guestQueue));
+		Console.WriteLine("Wasted grams of food: {0}", waste);
+		}
+		
+		
+		
+		
+		
+	}
+    
+}

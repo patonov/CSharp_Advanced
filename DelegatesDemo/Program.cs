@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DelegatesDemo
 {
-    internal class Program
+    public class Program
     {
         public delegate int Calculate(int x, int y);
 
@@ -41,11 +42,15 @@ namespace DelegatesDemo
 
             Predicate<string> hasCapitalizedLastLetter = w => char.IsUpper(w[w.Length - 1]);
 
-            Console.WriteLine(hasCapitalizedFirstLetter(Console.ReadLine()!));
-            Console.WriteLine(hasCapitalizedLastLetter(Console.ReadLine()!));
+            //Console.WriteLine(hasCapitalizedFirstLetter(Console.ReadLine()!));
+            //Console.WriteLine(hasCapitalizedLastLetter(Console.ReadLine()!));
 
+            StringTransformer<string> transformer = new StringTransformer<string>();
+            transformer.ReturnTheSameThing("22"); //We expect to see String and 22
+            transformer.OutputValue("bzz"); //We expect to see String and bzz
 
-
+            transformer.ReturnTheSameThing( (double.Parse("22") / double.Parse("22.1")).ToString("F3") );
         }
     }
+   
 }
